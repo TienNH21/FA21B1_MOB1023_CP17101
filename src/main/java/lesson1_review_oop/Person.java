@@ -1,4 +1,4 @@
-package lesson1;
+package lesson1_review_oop;
 
 public class Person {
     private String name;
