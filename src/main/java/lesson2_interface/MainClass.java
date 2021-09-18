@@ -2,8 +2,9 @@ package lesson2_interface;
 
 public class MainClass {
     public static void main(String[] args) {
-        Animal a = new Cat();
+        Animal a = new Chicken();
         
-        Runable r = new Cat();
+        System.out.println(Chicken.soChan);
+        
     }
 }

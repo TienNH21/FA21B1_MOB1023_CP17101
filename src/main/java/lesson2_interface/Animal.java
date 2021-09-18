@@ -38,6 +38,4 @@ public abstract class Animal {
     public void setColor(String color) {
         this.color = color;
     }
-    
-    
 }
