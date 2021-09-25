@@ -1,11 +1,59 @@
 package lesson4_swing;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import luyen_tap_1.Nguoi;
+import luyen_tap_1.QLDS;
+import luyen_tap_1.QLDanhSachInterface;
+import luyen_tap_1.SinhVien;
+
 public class QLSV_Form extends javax.swing.JFrame {
+    private QLDanhSachInterface qlds;
+
     public QLSV_Form() {
         initComponents();
         resetForm();
+        
+        this.qlds = new QLDS();
+        
+        this.qlds.add(new SinhVien("PH1", "LTMT", "Ng Van A", "HN", "HN", 1));
+        this.qlds.add(new SinhVien("PH2", "UDPM", "Tran Thi B", "HN", "HN", 0));
+        
+        this.hienThiTable();
     }
 
+    public void hienThiTable() {
+        DefaultTableModel dtm = (DefaultTableModel) this.tblSV.getModel();
+        
+        // Xóa toàn bộ dữ liệu đang có trên JTable
+        dtm.setRowCount(0);
+        
+        ArrayList<Nguoi> ds = this.qlds.getList();
+        for (int i = 0; i < ds.size(); i++) {
+            SinhVien sv = (SinhVien) ds.get(i);
+            
+//            String gt = sv.getGioiTinh() == 1 ? "Nam" : "Nữ";
+            String gt = "";
+            if (sv.getGioiTinh() == 1) {
+                gt = "Nam";
+            } else {
+                gt = "Nữ";
+            }
+
+            Object[] row = new Object[] {
+                sv.getMaSV(),
+                sv.getHoTen(),
+                gt,
+                sv.getChuyenNganh(),
+                sv.getQueQuan(),
+                sv.getDiaChi(),
+            };
+
+            dtm.addRow(row);
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -65,10 +113,25 @@ public class QLSV_Form extends javax.swing.JFrame {
         cbbChuyenNganh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TKTW", "UDPM", "LTMT" }));
 
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         btnClear.setText("Clear");
         btnClear.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +209,7 @@ public class QLSV_Form extends javax.swing.JFrame {
                         .addGap(7, 7, 7)
                         .addComponent(btnSua)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnXoa)
+                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnClear)))
                 .addContainerGap(56, Short.MAX_VALUE))
@@ -173,6 +236,11 @@ public class QLSV_Form extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblSV.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSVMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblSV);
@@ -247,6 +315,87 @@ public class QLSV_Form extends javax.swing.JFrame {
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         resetForm();
     }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        String hoTen = this.txtHoTen.getText(),
+            maSV = this.txtMaSV.getText(),
+            diaChi = this.txtDiaChi.getText(),
+            queQuan = this.txtQueQuan.getText(),
+            chuyenNganh = this.cbbChuyenNganh.getSelectedItem().toString();
+        
+        int gt = this.radioNam.isSelected() == true ? 1 : 0;
+        
+        SinhVien sv = new SinhVien(maSV, chuyenNganh, hoTen, queQuan, diaChi, gt);
+        
+        this.qlds.add(sv);
+        this.hienThiTable();
+        JOptionPane.showMessageDialog(this, "Thêm mới thành công");
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void tblSVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSVMouseClicked
+        int row = this.tblSV.getSelectedRow();
+        if (row == -1) {
+            return ;
+        }
+
+        String maSV = this.tblSV.getValueAt(row, 0).toString();
+        String hoTen = this.tblSV.getValueAt(row, 1).toString();
+        String gioiTinh = this.tblSV.getValueAt(row, 2).toString();
+        String chuyenNganh = this.tblSV.getValueAt(row, 3).toString();
+        String queQuan = this.tblSV.getValueAt(row, 4).toString();
+        String diaChi = this.tblSV.getValueAt(row, 5).toString();
+        
+        this.txtMaSV.setText(maSV);
+        this.txtHoTen.setText(hoTen);
+        this.txtQueQuan.setText(queQuan);
+        this.txtDiaChi.setText(diaChi);
+
+        this.cbbChuyenNganh.setSelectedItem(chuyenNganh);
+        
+        if (gioiTinh.equals("Nam")) {
+            this.radioNam.setSelected(true);
+        } else {
+            this.radioNu.setSelected(true);
+        }
+    }//GEN-LAST:event_tblSVMouseClicked
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        int viTri = this.tblSV.getSelectedRow();
+        if (viTri == -1) {
+            return ;
+        }
+        
+        String hoTen = this.txtHoTen.getText(),
+            maSV = this.txtMaSV.getText(),
+            diaChi = this.txtDiaChi.getText(),
+            queQuan = this.txtQueQuan.getText(),
+            chuyenNganh = this.cbbChuyenNganh.getSelectedItem().toString();
+        
+        int gt = this.radioNam.isSelected() == true ? 1 : 0;
+        
+        SinhVien sv = new SinhVien(maSV, chuyenNganh, hoTen, queQuan, diaChi, gt);
+        JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+        
+        this.qlds.edit(viTri, sv);
+        this.hienThiTable();
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        int viTri = this.tblSV.getSelectedRow();
+        if (viTri == -1) {
+            return ;
+        }
+        
+        int xacNhan = JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa bản ghi này không?");
+        System.out.println(xacNhan);
+        if (xacNhan == JOptionPane.YES_OPTION) {
+            this.qlds.delete(viTri);
+            this.hienThiTable();
+            JOptionPane.showMessageDialog(this, "Xóa thành công");
+        } else if (xacNhan == JOptionPane.NO_OPTION) {
+        } else if (xacNhan == JOptionPane.CANCEL_OPTION) {
+        }
+    }//GEN-LAST:event_btnXoaActionPerformed
 
     private void resetForm() {
         this.txtHoTen.setText("");
