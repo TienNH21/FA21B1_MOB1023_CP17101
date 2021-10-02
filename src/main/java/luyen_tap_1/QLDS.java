@@ -12,6 +12,15 @@ public class QLDS implements QLDanhSachInterface {
     public QLDS(ArrayList<Nguoi> list) {
         this.list = list;
     }
+//    
+//    public void taoDoiTuongAo() throws Exception {
+//        try {
+//            // Code ...
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw e;
+//        }
+//    }
 
     @Override
     public void add(Nguoi nguoi) {
