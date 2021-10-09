@@ -1,6 +1,7 @@
 lesson10_io/DemoFileIOStream.class
 lesson2_interface/MainClass.class
 lesson8_exception/DemoExceptionFrame$1.class
+lesson12_multithreading/DemoRunnableFrame$1.class
 lesson6_collection/DemoMap.class
 lesson2_interface/Fish.class
 lesson4_swing/QLSV_Form$2.class
@@ -10,6 +11,8 @@ lesson6_collection/DemoCollection$1.class
 lesson4_swing/QLSV_Form$6.class
 lesson4_swing/DemoSwing$1.class
 luyen_tap_1/QLDS_DB.class
+lesson12_multithreading/MainClass.class
+lesson12_multithreading/MyThread.class
 lesson4_swing/DemoSwing.class
 lesson4_swing/QLSV_Form$1.class
 lesson10_io/DemoObjectIOStream.class
@@ -33,6 +36,8 @@ lesson2_interface/Animal.class
 lesson2_interface/Runable.class
 luyen_tap_1/QLDS_File.class
 luyen_tap_1/MainClass.class
+lesson12_multithreading/DemoRunnableFrame.class
+lesson12_multithreading/DemoRunnable.class
 lesson6_collection/DemoCollection.class
 lesson8_exception/DemoMultiException.class
 lesson4_swing/DemoSwing$3.class
